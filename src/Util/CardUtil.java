@@ -102,21 +102,21 @@ public class CardUtil {
     public String createNumber(){
         //创建Random对象
         Random r=new Random();
-        //生成8位手机号
-        String num="139";
+        //生成8位手机号  优化，使用StringBuilder对象，减少对象的产生
+        StringBuilder num=new StringBuilder("139");
         for (int i = 0; i < 8; i++) {
             int eight=r.nextInt(10);
-            num+=eight;
+            num.append(eight);
         }
         //获取cards用户的手机号集合
         Set<String> phoneSet=cards.keySet();
         for(String number:phoneSet){
             if(number.equals(num)){
-                //递归，获取新手机号，直到num和已知集合内号码不一致
-                num=createNumber();
+                //递归，获取新手机号，直到num和已知集合内号码不一致，   （不得已进行数据类型转化）
+                num=new StringBuilder(createNumber());
             }
         }
-        return num;
+        return num.toString();
 
     }
     /**
